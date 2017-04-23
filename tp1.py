@@ -10,11 +10,7 @@ class dictord :
 		self._valeurs = []
 		self._cles = []
 		
-		for i in base :
-			self[i] = base[i]
-			
-		for i in kwargs:
-			self[i] = kwargs[i]
+		
 			
 			
 	def __repr__(self):
@@ -37,31 +33,28 @@ class dictord :
 		str += "}"
 		
 		
-def __del__(self):
-        """Méthode appelée quand l'objet est supprimé"""
-        del self._values
-        del self._cles
-        
-        
-def __setattr__(self, nom_attr, val_attr):
-        """Méthode appelée quand on fait objet.nom_attr = val_attr.
-        On se charge d'enregistrer l'objet"""
-     
-    if nom_attr not in self._cles:
-		self._cles.append(nom_attr)
-	i = self._cles.find(nom_attr)
-	self.values[i] = val_attr
+	def __del__(self):
+		del self._values
+		del self._cles
+			
+			
+	def __setattr__(self, nom_attr, val_attr):
+			 
+		if nom_attr not in self._cles:
+			self._cles.append(nom_attr)
+		i = self._cles.find(nom_attr)
+		self._values[i] = val_attr
+			
+	def __getattr__(self, nom_attr) :
 		
-def __getattr__(self, nom_attr) :
-	
-	if nom_attr not in self._cles:
-		raise KeyError ("key not found")
-		
-	i = self._cles.find(nom_attr)
-	return self.values[i]
+		if nom_attr not in self._cles:
+			raise KeyError ("key not found")
+			
+		i = self._cles.find(nom_attr)
+		return self._values[i]
 
- 
-def __hasattr__(self, nom_attr):
+	 
+	def __hasattr__(self, nom_attr):
 
 		if nom_attr not in self._cles:
 			return False
@@ -69,13 +62,29 @@ def __hasattr__(self, nom_attr):
 			return True
 
 
-def __delattr__(self, nom_attr):
-	if nom_attr not in self._cles:
-		raise KeyError ("key not found")
+	def __delattr__(self, nom_attr):
 		
-	i = self._cles.find(nom_attr)
-	return self.values[i]
+		if nom_attr not in self._cles:
+			raise KeyError ("key not found")
+			
+		i = self._cles.find(nom_attr)
+		del self._cles[i]
+		del self._values[i]
+
+	   
+	def __contains__(self, item):
+		return item in self._values
+		
+	 
+	def __len__(self):
+		return len(self._values)
+	   
+
+if __name__ == '__main__':	
+	d = dictord()
+	#print d
 	
-delattr(objet, "nom") # = del objet.nom ou objet.__delattr__("nom")
-   
+	
+	
+	
 	
